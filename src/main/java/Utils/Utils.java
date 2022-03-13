@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Arrays;
 
@@ -114,14 +115,14 @@ public class Utils {
     public static void writeDataToJson(File jsonFile, Object object) throws Exception {
         Files.deleteIfExists(jsonFile.toPath());
         RandomAccessFile randomAccessFile = new RandomAccessFile(jsonFile, "rw");
-        Gson gson = new GsonBuilder().disableHtmlEscaping().excludeFieldsWithoutExposeAnnotation().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().excludeFieldsWithoutExposeAnnotation().create();
         String json;
         if (!object.getClass().equals(JSONArray.class)) {
             json = gson.toJson(object);
         } else {
             json = object.toString();
         }
-        randomAccessFile.write(json.getBytes());
+        randomAccessFile.write(json.getBytes(StandardCharsets.UTF_8));
         randomAccessFile.close();
     }
 

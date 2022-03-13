@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Scanner;
 
@@ -57,6 +58,7 @@ public class Main {
     private static void importLocalize(File localizeMsgDat, File localizeMsgJson) throws Exception {
         initRandomAccessFile(localizeMsgDat);
         Gson gson = new Gson();
+        Files.lines(localizeMsgJson.toPath(), StandardCharsets.UTF_8);
         Reader reader = Files.newBufferedReader(localizeMsgJson.toPath());
         Container container = gson.fromJson(reader, Container.class);
         container.importData(localizeMsgRAF);
